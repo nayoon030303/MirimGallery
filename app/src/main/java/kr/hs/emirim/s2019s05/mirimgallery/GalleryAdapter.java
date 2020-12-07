@@ -1,12 +1,17 @@
 package kr.hs.emirim.s2019s05.mirimgallery;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import javax.xml.datatype.Duration;
 
 public class GalleryAdapter extends BaseAdapter {
 
@@ -17,8 +22,12 @@ public class GalleryAdapter extends BaseAdapter {
     String[] imgName = {"삼진그룹영어토익반","소리도 없이","담보","아이랜드","코랠라인","기생충","시동"
             ,"인터스텔라","검은 사제들","사자","늑대소년","너의이름은","컨져링","애나벨","해리포터 마법의돌",
             "해리포터 비밀의방"};
+
+
     Context context;
     ImageView imgvMain;
+
+
 
     public GalleryAdapter(Context context,ImageView imgvMain){
         this.context = context;
@@ -48,12 +57,22 @@ public class GalleryAdapter extends BaseAdapter {
         imgV.setPadding(5,5,5,5 );
         imgV.setImageResource(imgRes[position]);
 
+        final  View toastView = View.inflate(context,R.layout.layout,null);
+        final TextView textTitle = toastView.findViewById(R.id.text_title);
+
         final  int pos = position;
         imgV.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                imgvMain.setScaleType(ImageView.ScaleType.FIT_CENTER);
                imgvMain.setImageResource(imgRes[pos]);
+
+                Toast toast = new Toast(context);
+                textTitle.setText(imgName[pos]);
+                toast.setView(toastView);
+                toast.show();
+
+
                 return false;
             }
         });
